@@ -1,0 +1,22 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/android:api-30
+    steps:
+      - checkout
+      - run: echo "Starting build"
+      - run: ./gradlew build
+      - run: ./gradlew test
+      - store_artifacts:
+          path: app/build/outputs/
+      - store_test_results:
+          path: app/build/test-results/
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
