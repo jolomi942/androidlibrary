@@ -1,8 +1,11 @@
+#using the CircleCI 2.1 configuration syntax to define a job called "build".
 version: 2.1
 jobs:
+  #This job uses the "circleci/android:api-30" Docker image, which comes pre-configured with the Android SDK
   build:
     docker:
       - image: circleci/android:api-30
+      #The steps for the "build" job include checking out the code, running the build and test Gradle tasks, and storing the build artifacts and test results
     steps:
       - checkout
       - run: echo "Starting build"
@@ -12,6 +15,7 @@ jobs:
           path: app/build/outputs/
       - store_test_results:
           path: app/build/test-results/
+          #I define a workflow that runs the "build" job when changes are pushed to the "master" branch
 workflows:
   version: 2
   build:
